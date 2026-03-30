@@ -2,7 +2,6 @@ package textsplitter
 
 import (
 	"errors"
-	"log"
 	"strings"
 
 	"github.com/tmc/langchaingo/schema"
@@ -79,7 +78,6 @@ func mergeSplits(splits []string, separator string, chunkSize int, chunkOverlap 
 			totalWithSplit += lenFunc(separator)
 		}
 
-		maybePrintWarning(total, chunkSize)
 		if totalWithSplit > chunkSize && len(currentDoc) > 0 {
 			doc := joinDocs(currentDoc, separator)
 			if doc != "" {
@@ -108,16 +106,6 @@ func mergeSplits(splits []string, separator string, chunkSize int, chunkOverlap 
 	}
 
 	return docs
-}
-
-func maybePrintWarning(total, chunkSize int) {
-	if total > chunkSize {
-		log.Printf(
-			"[WARN] created a chunk with size of %v, which is longer then the specified %v\n",
-			total,
-			chunkSize,
-		)
-	}
 }
 
 // Keep popping if:
